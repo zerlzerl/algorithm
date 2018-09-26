@@ -74,12 +74,6 @@ public class OpenCheck {
                 int req_2_x = ((Map<String, Long>) requests.get(1)).get("x").intValue();//黑方第二手棋x
                 int req_2_y = ((Map<String, Long>) requests.get(1)).get("y").intValue();//黑方第二手棋y
 
-/*                if((req_1_x < 2 || req_1_x > 12 || req_1_y < 2 || req_1_y > 12
-                        || req_2_x < 2 || req_2_x > 12 || req_2_y < 2 || req_2_y > 12)
-                        && (Math.abs(req_2_x - req_1_x) > 2 && Math.abs(req_2_y - req_1_y) > 2)){
-                    //前两手棋在最边上两条线上，且不临近
-                    //正常下
-                }*/
                 if(req_1_x > 5 && req_1_x < 9 && req_1_y > 5 && req_1_y < 9
                         && req_2_x > 5 && req_2_x < 9 && req_2_y > 5 && req_2_y < 9) {
                     //换手
