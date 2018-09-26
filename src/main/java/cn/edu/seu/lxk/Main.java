@@ -4,7 +4,6 @@ package cn.edu.seu.lxk;
 import org.json.simple.JSONValue;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * botzone整合类
@@ -343,9 +342,6 @@ public class Main {
         protected final Field[][][][] directions;
 
         protected int currentIndex;
-
-
-
         //保存走棋序列的栈
         private Stack<Move> moveStack;
 
