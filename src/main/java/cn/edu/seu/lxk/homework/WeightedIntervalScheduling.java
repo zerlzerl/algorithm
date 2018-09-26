@@ -1,4 +1,4 @@
-package cn.edu.seu.lxk;
+package cn.edu.seu.lxk.homework;
 
 import java.util.ArrayList;
 import java.util.Arrays;
