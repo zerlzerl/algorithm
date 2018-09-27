@@ -29,5 +29,11 @@ public class Field {
         this.col = col;
         this.index = 0;
     }
+
+    public Field(int row, int col, int index) {
+        this.row = row;
+        this.col = col;
+        this.index = index;
+    }
 }
 
