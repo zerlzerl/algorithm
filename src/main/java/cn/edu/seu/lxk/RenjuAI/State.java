@@ -25,7 +25,7 @@ public class State {
 
     /**
      * 创建一个新的状态，构造函数
-     * @param intersections 棋盘上的交叉点数
+     * @param intersections 棋盘上大小
      */
     public State(int intersections) {
         this.board = new Field[intersections][intersections];
