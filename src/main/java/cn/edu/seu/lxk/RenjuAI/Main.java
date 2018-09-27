@@ -16,7 +16,7 @@ public class Main {
     private long startTime;
 
 
-    private State state;
+    protected State state;
 
     public Main() {
         this.time = (2200 - 100) * 1000000;
@@ -274,32 +274,24 @@ public class Main {
         List<Map> requests = input.get("requests");
         List<Map> responses = input.get("responses");
 
-        //判断换手
-        if(isChangeHands(requests, responses)){
-            //发送换手请求
-            response.put("x", -1);
-            response.put("y", -1);
-            output.put("response", response);
-            System.out.print(JSONValue.toJSONString(output));
-        } else {
 
-            List<Move> moves = new ArrayList<>();
-            //request size比 response大1
-            for (int i = 0; i < requests.size(); i++) {
-                //遍历两个回复数组
-                int req_x = ((Map<String, Long>) requests.get(i)).get("x").intValue();
-                int req_y = ((Map<String, Long>) requests.get(i)).get("y").intValue();
-                if (req_x != -1 && req_y != -1) {
-                    state.makeMove(new Move(req_x, req_y));
-                }
-                if (i < responses.size()) {
-                    int resp_x = ((Map<String, Long>) responses.get(i)).get("x").intValue();
-                    int resp_y = ((Map<String, Long>) responses.get(i)).get("y").intValue();
-                    if (resp_x != -1 && resp_y != -1) {
-                        state.makeMove(new Move(resp_x, resp_y));
-                    }
+        List<Move> moves = new ArrayList<>();
+        //request size比 response大1
+        for (int i = 0; i < requests.size(); i++) {
+            //遍历两个回复数组
+            int req_x = ((Map<String, Long>) requests.get(i)).get("x").intValue();
+            int req_y = ((Map<String, Long>) requests.get(i)).get("y").intValue();
+            if (req_x != -1 && req_y != -1) {
+                state.makeMove(new Move(req_x, req_y));
+            }
+            if (i < responses.size()) {
+                int resp_x = ((Map<String, Long>) responses.get(i)).get("x").intValue();
+                int resp_y = ((Map<String, Long>) responses.get(i)).get("y").intValue();
+                if (resp_x != -1 && resp_y != -1) {
+                    state.makeMove(new Move(resp_x, resp_y));
                 }
             }
+
             //long s = System.currentTimeMillis();
             Move best = player.getMove(state);
             //long e = System.currentTimeMillis();
