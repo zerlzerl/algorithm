@@ -2,7 +2,7 @@ package cn.edu.seu.lxk.RenjuAI;
 
 /**
  * Created by zerlz on 2018/9/20.
- * 威胁模式
+ * 有威胁的棋型模式
  */
 public class ThreatPattern {
     private int[][] pattern;
