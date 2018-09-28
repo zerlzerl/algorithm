@@ -12,15 +12,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Main {
     private static final int BOARD_SIZE = 15;
 
-    private long time;
+    private long time = 2500000000L;
     private long startTime;
 
 
     protected State state;
 
-    public Main() {
-        this.time = (2200 - 100) * 1000000;
-    }
 
     /**
      * 决定是否需要对有威胁的步骤做出回应，采用一个威胁降序排列的步骤列表来进行搜索
