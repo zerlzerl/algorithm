@@ -280,23 +280,23 @@ public class Main {
                 int req_1_y = ((Map<String, Long>) requests.get(1)).get("y").intValue();//白方第一手棋y
                 if(req_1_x < 4 || req_1_x > 10 || req_1_y < 4 || req_1_y > 10){
                     //白方第二手下在最边上的四列,黑方也落对称位置的地方
-                    response.put("x", 15 - req_1_x);
-                    response.put("y", 15 - req_1_y);
+                    response.put("x", 14 - req_1_x);
+                    response.put("y", 14 - req_1_y);
                     output.put("response", response);
                     System.out.print(JSONValue.toJSONString(output)); return;
                 } else {
-                    //白方第二手正常下，黑方落在离当前格子4格的位置，即使被换先手也不会太吃亏
+                    //白方第二手正常下，黑方落在离当前格子2格的位置，即使被换先手也不会太吃亏
                     int resp_1_x = ((Map<String, Long>) responses.get(0)).get("x").intValue();//黑方第一手棋x
                     int resp_1_y = ((Map<String, Long>) responses.get(0)).get("y").intValue();//黑方第一手棋y
 
-                    if(resp_1_x - 4 != resp_1_x && resp_1_y - 4 != resp_1_y){//不和第一手白棋冲突
-                        response.put("x", resp_1_x - 4);
-                        response.put("y", resp_1_y - 4);
+                    if(resp_1_x - 2 != resp_1_x && resp_1_y - 2 != resp_1_y){//不和第一手白棋冲突
+                        response.put("x", resp_1_x - 2);
+                        response.put("y", resp_1_y - 2);
                         output.put("response", response);
                         System.out.print(JSONValue.toJSONString(output)); return;
                     } else { // 冲突了就换另一个位置
-                        response.put("x", resp_1_x + 4);
-                        response.put("y", resp_1_y + 4);
+                        response.put("x", resp_1_x + 2);
+                        response.put("y", resp_1_y + 2);
                         output.put("response", response);
                         System.out.print(JSONValue.toJSONString(output)); return;
                     }
