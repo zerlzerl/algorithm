@@ -114,16 +114,16 @@ public class ThreatUtils {
         for(int i = 0; i < direction.length; i++) {
             //在边界内寻找匹配的棋型
             if(i + (pattern.length - 1) < direction.length) {
-                int count = 0;
+                int index = 0;
                 for(int j = 0; j < pattern.length; j++) {
                     if(direction[i + j].index == pattern[j]) {
-                        count++;
+                        index++;
                     } else {
                         break;
                     }
                 }
                 //返回匹配位置
-                if(count == pattern.length) {
+                if(index == pattern.length) {
                     return i;
                 }
             } else {
