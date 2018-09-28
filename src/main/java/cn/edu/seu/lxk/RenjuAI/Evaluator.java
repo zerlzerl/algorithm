@@ -10,30 +10,30 @@ public class Evaluator {
     /**
      * 给当前棋盘状态State与沿垂直/水平/对角线方向的数组，根据可能形成的五连和移动的次数计算分数。
      *
-     * @param direction 表示方向的一维数组
+     * @param direction 表示一个方向的一维数组
      * @return 该方向上的得分
      */
     private static int scoreDirection(Field[] direction, int index) {
-        int score = 0;
+        int score = 0;//direction是directions[row][col][direction]对象score是对特定位置特定方向的计分
 
-        //通过一个field数组传递一个五连的窗口
-        for(int i = 0; (i + 4) < direction.length; i++) {
+        //计分
+        for(int i = 0; (i + 4) < direction.length; i++) {//j表示往外探索的格数，i+j不大于direction长度，以避免越界
             int empty = 0;
             int stones = 0;
             for(int j = 0; j <= 4; j++) {
                 if(direction[i + j].index == 0) {
-                    empty++;
+                    empty++;//空格格数累加
                 }
                 else if(direction[i + j].index == index) {
-                    stones++;
+                    stones++;//棋子格数累加
                 } else {
                     break;
                 }
             }
-            //忽略已成五，清空窗口
+            //全满或全空跳过
             if(empty == 0 || empty == 5) continue;
 
-            //window只包含空的位置和棋子，可以形成一个五，根据需要多少步得到分数
+            //根据成五需要多少步得到分数
             if(stones + empty == 5) {
                 score += SCORES[empty];
             }
