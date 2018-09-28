@@ -17,15 +17,11 @@ public class ThreatUtils {
         THREES = new ArrayList<>();
         FOURS = new ArrayList<>();
         REFUTATIONS = new ArrayList<>();
-        //活3，两头没堵，所以要六个空
-        THREES.add(new ThreatPattern(new int[] {0, 1, 1, 1, 0, 0}, new int[]
-                {0, 4, 5}));
-        THREES.add(new ThreatPattern(new int[] {0, 0, 1, 1, 1, 0}, new int[]
-                {0, 1, 5}));
-        THREES.add(new ThreatPattern(new int[] {0, 1, 0, 1, 1, 0}, new int[]
-                {0, 2, 5}));
-        THREES.add(new ThreatPattern(new int[] {0, 1, 1, 0, 1, 0}, new int[]
-                {0, 3, 5}));
+        //活3，两头没堵，所以要六个空，以及0的索引
+        THREES.add(new ThreatPattern(new int[] {0, 1, 1, 1, 0, 0}, new int[]{0, 4, 5}));
+        THREES.add(new ThreatPattern(new int[] {0, 0, 1, 1, 1, 0}, new int[]{0, 1, 5}));
+        THREES.add(new ThreatPattern(new int[] {0, 1, 0, 1, 1, 0}, new int[]{0, 2, 5}));
+        THREES.add(new ThreatPattern(new int[] {0, 1, 1, 0, 1, 0}, new int[]{0, 3, 5}));
         //成四，不分眠四和活四
         FOURS.add(new ThreatPattern(new int[] {1, 1, 1, 1, 0}, new int[] {4} ));
         FOURS.add(new ThreatPattern(new int[] {1, 1, 1, 0, 1}, new int[] {3} ));
