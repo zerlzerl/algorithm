@@ -322,8 +322,8 @@ public class Main {
     private void printSearchInfo(Move bestMove, int score, int depth) {
         String moveAlgebraic = bestMove.getPositionStr(BOARD_SIZE);
         Logger.getGlobal().log(Level.INFO,
-                String.format("Depth: %d, Evaluation: %d, "
-                        + "Best move: %s", depth, score, moveAlgebraic));
+                String.format("层数: %d, 分数: %d, "
+                        + "最佳着法: %s", depth, score, moveAlgebraic));
     }
 
     private void printPerformanceInfo() {
@@ -332,11 +332,11 @@ public class Main {
             double nodesPerMs = totalNodeCount / (duration > 0 ? duration : 1);
             double avgBranches = (double) branchesExploredSum / (double)
                     nonLeafCount;
-            Logger.getGlobal().log(Level.INFO, "Time: {0}ms", duration);
-            Logger.getGlobal().log(Level.INFO, "Nodes: {0}", totalNodeCount);
-            Logger.getGlobal().log(Level.INFO, "Nodes/ms: {0}", nodesPerMs);
+            Logger.getGlobal().log(Level.INFO, "花费时间: {0}ms", duration);
+            Logger.getGlobal().log(Level.INFO, "节点数: {0}", totalNodeCount);
+            Logger.getGlobal().log(Level.INFO, "节点/ms: {0}", nodesPerMs);
             Logger.getGlobal().log(Level.INFO, String.format(
-                    "Branches explored (avg): %.2f ", avgBranches));
+                    "分支平均展开数: %.2f ", avgBranches));
         }
     }
 
