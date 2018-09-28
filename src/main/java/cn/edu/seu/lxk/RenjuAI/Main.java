@@ -5,6 +5,8 @@ import org.json.simple.JSONValue;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * 主程序入口
@@ -14,6 +16,9 @@ public class Main {
 
     private long time = 2500000000L;
     private long startTime;
+    private int totalNodeCount;
+    private int nonLeafCount;
+    private int branchesExploredSum;
 
 
     protected State state;
@@ -136,19 +141,23 @@ public class Main {
      */
     private int negamax(State state, int depth, int alpha, int beta)
             throws InterruptedException {
-        if(Thread.interrupted() || (System.nanoTime() - startTime) > time) {
+        totalNodeCount++;
+        if(Thread.interrupted() || (System.nanoTime() - startTime) > time) {//找到结束状态或者是递归深度达到，就返回当前状态和深度下对于局面的评估分数
             throw new InterruptedException();
         }
-        if(state.terminal() != 0 || depth == 0) {//找到结束状态或者是递归深度达到，就返回当前状态和深度下对于局面的评估分数
+        if(state.terminal() != 0 || depth == 0) {
             return Evaluator.evaluateState(state, depth);
         }
+        nonLeafCount++;
 
         int value;
         int best = Integer.MIN_VALUE;
+        int countBranches = 0;
 
         List<Move> moves = getSortedMoves(state);
 
         for (Move move : moves) {
+            countBranches++;
             //尝试步骤，更新状态
             state.makeMove(move);
             //新状态递归negamax,因为
@@ -165,6 +174,7 @@ public class Main {
                 break;
             }
         }
+        branchesExploredSum += countBranches;
         return best;
     }
 
@@ -198,6 +208,9 @@ public class Main {
         //结果排序
         scoredMoves.sort((move1, move2) -> move2.score - move1.score);
 
+        printSearchInfo(scoredMoves.get(0).move, scoredMoves.get(0).score,
+                depth);
+
         moves.clear();
         for(ScoredMove move : scoredMoves) moves.add(move.move);
         return moves;
@@ -229,6 +242,9 @@ public class Main {
      * @return
      */
     public Move getMove(GameState gameState) {
+        this.totalNodeCount = 0;
+        this.nonLeafCount = 0;
+        this.branchesExploredSum = 0;
         //从GameState对象创建一个适合AI进行搜索的含hash置换表的State对象
         this.state = new State(BOARD_SIZE);
         List<Move> moves = gameState.getMovesMade();
@@ -236,6 +252,8 @@ public class Main {
 
         //调用包装方法做2到8层的搜索尝试
         Move best = iterativeDeepening(2, 8);
+        printPerformanceInfo();
+
         return best;
     }
 
@@ -300,6 +318,28 @@ public class Main {
             System.out.print(JSONValue.toJSONString(output));
         }
     }
+
+    private void printSearchInfo(Move bestMove, int score, int depth) {
+        String moveAlgebraic = bestMove.getPositionStr(BOARD_SIZE);
+        Logger.getGlobal().log(Level.INFO,
+                String.format("Depth: %d, Evaluation: %d, "
+                        + "Best move: %s", depth, score, moveAlgebraic));
+    }
+
+    private void printPerformanceInfo() {
+        if(totalNodeCount > 0) {
+            long duration = (System.nanoTime() - startTime) / 1000000;
+            double nodesPerMs = totalNodeCount / (duration > 0 ? duration : 1);
+            double avgBranches = (double) branchesExploredSum / (double)
+                    nonLeafCount;
+            Logger.getGlobal().log(Level.INFO, "Time: {0}ms", duration);
+            Logger.getGlobal().log(Level.INFO, "Nodes: {0}", totalNodeCount);
+            Logger.getGlobal().log(Level.INFO, "Nodes/ms: {0}", nodesPerMs);
+            Logger.getGlobal().log(Level.INFO, String.format(
+                    "Branches explored (avg): %.2f ", avgBranches));
+        }
+    }
+
     private class ScoredMove implements Comparable<ScoredMove> {
         public Move move;
         public int score;
@@ -314,6 +354,8 @@ public class Main {
         }
 
     }
+
+
 
 
 }
